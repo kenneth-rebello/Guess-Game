@@ -2,8 +2,8 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 13788,
-  "expoServerNgrokUrl": "https://au-9kx.anonymous.guess-game.exp.direct",
-  "packagerNgrokUrl": "https://packager.au-9kx.anonymous.guess-game.exp.direct",
-  "ngrokPid": 14744
+  "packagerPid": 2032,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

@@ -49,9 +49,7 @@ export default function App() {
   return (
     <View style={styles.screen}>
       <Navbar/>
-        <ScrollView>
-          {content}
-        </ScrollView>
+        {content}
     </View>
   );
 }

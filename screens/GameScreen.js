@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { View, Text, StyleSheet, Alert, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Alert, ScrollView, Dimensions } from 'react-native'
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
 import CustomButton from '../components/CustomButton';
@@ -21,9 +21,26 @@ const GameScreen = ({choice, numberOfRounds}) => {
     const lowerBound = useRef(0)
     const higherBound = useRef(99)
     const initialGuess = makeGuess(1,100,choice)
+    const [landscape, setLandscape] = useState(
+        Dimensions.get('window').width>500 ? true : false
+    )
 
     const [guess, setGuess] = useState(initialGuess);
     const [pastGuesses, setPastGuesses] = useState([initialGuess])
+
+    const updateLayout = () => {
+        let width = Dimensions.get('window').width
+        if(width>500) setLandscape(true)
+        else setLandscape(false)
+    }
+
+    useEffect(()=>{
+        Dimensions.addEventListener('change', updateLayout)
+
+        return () => {
+            Dimensions.removeEventListener('change', updateLayout)    
+        }
+    },[])
 
     useEffect(()=>{
         if(guess===choice){
@@ -56,11 +73,21 @@ const GameScreen = ({choice, numberOfRounds}) => {
     return (
         <View style={styles.screen}>
             <Text>Opponent's Guess</Text>
-            <NumberContainer>{guess}</NumberContainer>
-            <Card style={styles.buttonContainer}>
-                <CustomButton title="-" onPress={()=>nextGuess('-')} color={Colors.faint}/>
-                <CustomButton title="+" onPress={()=>nextGuess('+')} color={Colors.faint}/>
-            </Card>
+
+            {landscape ? <View>
+                <Card style={styles.buttonContainer}>
+                    <CustomButton title="-" onPress={()=>nextGuess('-')} color={Colors.faint} style={styles.button}/>
+                    <NumberContainer>{guess}</NumberContainer>
+                    <CustomButton title="+" onPress={()=>nextGuess('+')} color={Colors.faint} style={styles.button}/>
+                </Card>
+            </View> : <View>
+                <NumberContainer>{guess}</NumberContainer>
+                <Card style={styles.buttonContainer}>
+                    <CustomButton title="-" onPress={()=>nextGuess('-')} color={Colors.faint} style={styles.button}/>
+                    <CustomButton title="+" onPress={()=>nextGuess('+')} color={Colors.faint} style={styles.button}/>
+                </Card>
+            </View>}
+
             <ScrollView contentContainerStyle={styles.listContainer}>
                 {pastGuesses.map((oneGuess, idx) => <View key={idx} style={styles.listItem}>
                     <Text style={styles.listText}>Guess #{pastGuesses.length-idx}</Text>
@@ -99,6 +126,10 @@ const styles = StyleSheet.create({
     listText:{
         fontSize:20,
         color: Colors.success
+    },
+    button:{
+        width:70,
+        margin:20
     }
 })
 

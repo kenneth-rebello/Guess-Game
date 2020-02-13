@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Alert, KeyboardAvoidingView } from 'react-native'
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, Alert, KeyboardAvoidingView, ScrollView } from 'react-native'
 import Card from '../components/Card'
 import Input from '../components/Input'
 import { Colors } from '../utils/Colors'
@@ -52,45 +52,47 @@ const StartScreen = ({setNumber}) => {
     }
 
     return (
-        <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={30}>
-            <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-                <View style={styles.container}>
-                    <Text style={styles.title}>Start Game</Text>
-                    <Card style={styles.inputContainer}>
-                        <Text>Enter a number between 1 and 100</Text>
-                        <Input style={styles.input} 
-                            keyboardType='number-pad'
-                            maxLength={2}
-                            onChangeText={Changer}
-                            value={enteredValue}
-                        />
-                        <View style={styles.buttonContainer}>
-                            <CustomButton title="Reset" onPress={()=>resetHandler()}
-                                color={Colors.secondary}
+        <ScrollView>
+            <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={30}>
+                <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
+                    <View style={styles.container}>
+                        <Text style={styles.title}>Start Game</Text>
+                        <Card style={styles.inputContainer}>
+                            <Text>Enter a number between 1 and 100</Text>
+                            <Input style={styles.input} 
+                                keyboardType='number-pad'
+                                maxLength={2}
+                                onChangeText={Changer}
+                                value={enteredValue}
                             />
-                            <CustomButton title="Confirm" 
-                                onPress={()=>confirmHandler()} 
-                                color={Colors.primary}
-                            />
-                        </View>
-                    </Card>
-                    {output}
-                </View>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+                            <View style={styles.buttonContainer}>
+                                <CustomButton title="Reset" onPress={()=>resetHandler()}
+                                    color={Colors.secondary}
+                                />
+                                <CustomButton title="Confirm" 
+                                    onPress={()=>confirmHandler()} 
+                                    color={Colors.primary}
+                                />
+                            </View>
+                        </Card>
+                        {output}
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
         padding:10,
         alignItems:'center'
     },
     title:{
-        fontSize:  20,
-        marginVertical: 10,
-        fontFamily: Fonts.title
+        fontSize:25,
+        marginVertical:10,
+        fontFamily: Fonts.title,
+        color:Colors.success
     },
     inputContainer:{
         width:'80%',
@@ -109,7 +111,8 @@ const styles = StyleSheet.create({
     },
     summary:{
         margin: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        width:180
     },  
     summaryText:{
         color: Colors.primary

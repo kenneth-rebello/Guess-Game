@@ -18,7 +18,10 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         padding:10,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        width:60,
+        alignSelf:'center',
+        marginHorizontal:20
     },
     number:{
         color:Colors.secondary,

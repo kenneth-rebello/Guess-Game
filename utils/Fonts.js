@@ -1,3 +1,3 @@
 export const Fonts = {
-    title: 'open-sans'
+    title: 'open-sans-bold'
 }
